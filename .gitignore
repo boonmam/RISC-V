@@ -1,0 +1,38 @@
+# Vivado generated/cache/output files
+*.jou
+*.log
+*.str
+*.wdb
+*.wdf
+*.pb
+*.rpt
+*.rpx
+*.dcp
+*.bit
+*.mcs
+*.prm
+*.vdi
+*.vds
+*.db
+*.dbg
+*.mem
+*.rlx
+*.rtti
+*.svtype
+*.type
+*.version
+*.xdbg
+*.ini
+
+# Vivado generated directories
+*.cache/
+*.runs/
+*.sim/
+*.hw/
+*.ip_user_files/
+
+# Vivado temporary/local files
+.Xil/
+.jobs/
+webtalk*.xml
+xsim.dir/
