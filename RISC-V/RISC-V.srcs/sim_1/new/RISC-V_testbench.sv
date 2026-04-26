@@ -27,13 +27,15 @@ module RISC_V_testbench;
 
     reg [7:0] LED;
     reg [2:0] RGB;
+    reg [7:0] CONN0;
 
     RISC_V_top uut (
         .clk(clk),
         .rst(rst),
         .sw(3'b000),
         .LED(LED),
-        .RGB(RGB)
+        .RGB(RGB),
+        .CONN0(CONN0)
     );
 
     always #5 clk = ~clk; // Generate a clock signal with a period of 10ns (100MHz)
@@ -49,7 +51,7 @@ module RISC_V_testbench;
         rst = 0; // Deactivate reset
 
         // Wait for some time to observe the behavior of the LEDs
-        #500;
+        #10_000_000;
 
         $finish; // End the simulation
     end

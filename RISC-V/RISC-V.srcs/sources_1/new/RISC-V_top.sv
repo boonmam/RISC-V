@@ -25,63 +25,26 @@ module RISC_V_top(
     input rst,
     input [2:0] sw, //Inputs from the switches to control the LEDs
     output [7:0] LED,  // Output to the LEDs
-    output [2:0] RGB  // Output to the RGB LEDs
-  );
-
-reg [7:0] LEDOut = 8'b00000000;
-reg [2:0] RGBLED = 3'b001;
-
-//Divide Down the Clock so LEDs are visible
-reg [24:0] count_reg = 0;
-reg clk1 = 0;
-reg clk2 = 0;
-
-always @(posedge clk) begin
-  if (rst == 1'b1) begin
-    count_reg <= 0;
-    clk1 <= 0;
-  end else begin
-  if (count_reg == 3000000) begin
-    count_reg <= 0;
-    clk1 <= ~clk1;
-  end else begin
-    count_reg <= count_reg + 1'b1;
-  end
-  end
-end
+    output [2:0] RGB,  // Output to the RGB LEDs
+    output [7:0] CONN0 // Output to the PMOD OLED display
+    );
     
-always @(posedge clk1, posedge rst)begin
-  if(rst == 1'b1)begin
-    LEDOut <= 8'b00000000;
-    RGBLED <= 3'b000; //White Light - Red Blue Green
-  end else begin
-  
-    if (clk2 == 1) begin
-        RGBLED <= RGBLED + 1'b1;
-        LEDOut <= LEDOut + 1'b1;
-        clk2 = ~clk2;
-    end
-        else begin
-        clk2 = ~clk2;
-        end
-    
-    
-      if(sw[0] == 1'b1)begin
-        LEDOut <= LEDOut + 1'b1;
-        RGBLED <= 3'b101; //Green
-      end
-      else if(sw[1] == 1'b1)begin
-        LEDOut <= LEDOut - 1'b1;
-        RGBLED <= 3'b110; //Red
-        end
-      else if(sw[2] == 1'b1)begin
-        LEDOut <= LEDOut << 1'b1;
-        RGBLED <= 3'b011; //Blue
-      end
-  end
-end
+assign RGB[2:0] = 3'b000; // Initialize RGB LEDs to off
+assign CONN0[2] = 1'b0; // Initialize PMOD OLED control signal to low
 
-assign LED = LEDOut;
-assign RGB = RGBLED;
+
+PMOD_SERIAL pmod_OLED (
+    .clk(clk),
+    .rst(rst),
+    .rst_n(CONN0[5]), // Not used in this implementation
+    .cs_n(CONN0[0]),  // Not used in this implementation
+    .sclk(CONN0[3]),   // Not used in this implementation
+    .mosi(CONN0[1]),   // Not used in this implementation
+    .DCEN(CONN0[4]),   // Not used in this implementation
+    .VCCEN(CONN0[6]),  // Not used in this implementation
+    .PMODEN(CONN0[7])  // Not used in this implementation
+);
+
+assign LED = CONN0;
 
 endmodule
