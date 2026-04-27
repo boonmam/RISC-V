@@ -29,7 +29,10 @@ module RISC_V_testbench;
     reg [2:0] RGB;
     reg [7:0] CONN0;
 
-    RISC_V_top uut (
+    RISC_V_top  #(
+        .CLK_FREQ_HZ(1_000_000))
+        
+        uut(
         .clk(clk),
         .rst(rst),
         .sw(3'b000),
@@ -51,7 +54,7 @@ module RISC_V_testbench;
         rst = 0; // Deactivate reset
 
         // Wait for some time to observe the behavior of the LEDs
-        #10_000_000;
+        #200000;
 
         $finish; // End the simulation
     end

@@ -20,7 +20,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module RISC_V_top(
+module RISC_V_top #(
+    parameter int CLK_FREQ_HZ = 100_000_000
+
+)(
     input clk,
     input rst,
     input [2:0] sw, //Inputs from the switches to control the LEDs
@@ -33,7 +36,9 @@ assign RGB[2:0] = 3'b000; // Initialize RGB LEDs to off
 assign CONN0[2] = 1'b0; // Initialize PMOD OLED control signal to low
 
 
-PMOD_SERIAL pmod_OLED (
+PMOD_SERIAL  #(
+    .CLK_FREQ_HZ(CLK_FREQ_HZ))
+    pmod_OLED(
     .clk(clk),
     .rst(rst),
     .rst_n(CONN0[5]), // Not used in this implementation
