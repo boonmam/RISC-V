@@ -11,15 +11,18 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
-      <ZoomEndTime time="20.050001 us"></ZoomEndTime>
-      <Cursor1Time time="20.050000 us"></Cursor1Time>
+      <ZoomStartTime time="3.380667 us"></ZoomStartTime>
+      <ZoomEndTime time="3.391983 us"></ZoomEndTime>
+      <Cursor1Time time="3.385000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="404"></NameColumnWidth>
-      <ValueColumnWidth column_width="190"></ValueColumnWidth>
+      <ValueColumnWidth column_width="166"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="12" />
+   <WVObjectSize size="19" />
+   <wave_markers>
+      <marker time="3395000" label="" />
+   </wave_markers>
    <wvobject fp_name="/RISC_V_testbench/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -42,8 +45,8 @@
       <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject fp_name="/RISC_V_testbench/uut/pmod_OLED/oled_state_cur" type="array">
-      <obj_property name="ElementShortName">oled_state_cur[2:0]</obj_property>
-      <obj_property name="ObjectShortName">oled_state_cur[2:0]</obj_property>
+      <obj_property name="ElementShortName">oled_state_cur[4:0]</obj_property>
+      <obj_property name="ObjectShortName">oled_state_cur[4:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/RISC_V_testbench/uut/pmod_OLED/delay_tgt" type="array">
       <obj_property name="ElementShortName">delay_tgt[31:0]</obj_property>
@@ -70,5 +73,33 @@
    <wvobject fp_name="/RISC_V_testbench/uut/pmod_OLED/delay_ack" type="logic">
       <obj_property name="ElementShortName">delay_ack</obj_property>
       <obj_property name="ObjectShortName">delay_ack</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RISC_V_testbench/uut/pmod_OLED/mosi" type="logic">
+      <obj_property name="ElementShortName">mosi</obj_property>
+      <obj_property name="ObjectShortName">mosi</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RISC_V_testbench/uut/pmod_OLED/sclk" type="logic">
+      <obj_property name="ElementShortName">sclk</obj_property>
+      <obj_property name="ObjectShortName">sclk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RISC_V_testbench/uut/pmod_OLED/cs_n" type="logic">
+      <obj_property name="ElementShortName">cs_n</obj_property>
+      <obj_property name="ObjectShortName">cs_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RISC_V_testbench/uut/pmod_OLED/spi_state_cur" type="array">
+      <obj_property name="ElementShortName">spi_state_cur[2:0]</obj_property>
+      <obj_property name="ObjectShortName">spi_state_cur[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RISC_V_testbench/uut/pmod_OLED/spi_busy" type="logic">
+      <obj_property name="ElementShortName">spi_busy</obj_property>
+      <obj_property name="ObjectShortName">spi_busy</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RISC_V_testbench/uut/pmod_OLED/spi_done" type="logic">
+      <obj_property name="ElementShortName">spi_done</obj_property>
+      <obj_property name="ObjectShortName">spi_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/RISC_V_testbench/uut/pmod_OLED/spi_start" type="logic">
+      <obj_property name="ElementShortName">spi_start</obj_property>
+      <obj_property name="ObjectShortName">spi_start</obj_property>
    </wvobject>
 </wave_config>

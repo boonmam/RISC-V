@@ -40,7 +40,7 @@ typedef enum logic [2:0] {
 spi_state_t spi_state_cur, spi_state_nxt;
 
 logic[31:0] clk_div_cnt;
-logic[7:0] spi_payload_1, spi_payload_2;
+logic[7:0] spi_payload;
 logic[2:0] spi_bit_cnt;
 logic spi_busy, spi_done, spi_bit_shift_strb;
 
@@ -58,8 +58,11 @@ logic [31:0] delay_value;
 
 localparam int  WAIT20US = 20 * CLK_FREQ_HZ / 1_000_000;
 localparam int  WAIT50MS = 50 * CLK_FREQ_HZ / 1_000;
-localparam int  SCLK_PERIOD = SPI_CLK_DIV / CLK_FREQ_HZ * 1000000000; // 320ns 
-localparam int  SCLK_PERIOD_HALF = SPI_CLK_DIV / 2; // 16
+
+localparam int SCLK_PERIOD = SPI_CLK_DIV;
+localparam int  SCLK_PERIOD_HALF = SCLK_PERIOD / 2;
+
+
 always_ff @(posedge clk ) begin
 
     if(rst) begin
@@ -119,6 +122,7 @@ always_comb begin
     delay_en = 1'b0;
     delay_value = 32'd0;
     delay_ack = 1'b0;
+    spi_payload = 8'h00;
 
     case(oled_state_cur)
         OLED_ST_RESET: begin
@@ -136,6 +140,8 @@ always_comb begin
             delay_ack = 1'b0;
 
             oled_state_nxt = OLED_ST_PWR_UP;
+
+            spi_payload = 8'h00;
         end
 
         OLED_ST_PWR_UP: begin
@@ -176,19 +182,17 @@ always_comb begin
 
         OLED_ST_UNLOCK: begin
             spi_cmd_data = 1'b1;
-            spi_two_byte = 1'b1;
             spi_start = 1'b1;
 
-            spi_payload_1 = 8'hFD; // Command Lock
-            spi_payload_2 = 8'h12; // Unlock OLED driver IC command set
+            spi_payload = 8'hFD; // Command Lock
+            // spi_payload = 8'h12; // Unlock OLED driver IC command set
 
-            if(spi_2_done) begin
+            if(spi_done) begin
                 spi_start = 1'b0;
-                oled_state_nxt = OLED_ST_IDLE;
+                oled_state_nxt = OLED_ST_RESET;
             end
         end
     endcase
-    
 end
 
 /// SPI State Machine /// 
@@ -300,31 +304,20 @@ always_comb begin
 
 
             if (clk_div_cnt >= SCLK_PERIOD) begin
-                bit_cnt_inc = 1'b1;
+                div_cnt_clr = 1'd1;
+               
 
                 if (spi_bit_cnt == 3'd7) begin
-                    spi_state_nxt = SPI_ST_STOP;
+                    spi_busy = 1'b0;
                     spi_done = 1'b1;
+                    spi_state_nxt = SPI_ST_IDLE;
+                    
                 end else begin
+                    bit_cnt_inc = 1'b1;
                     spi_state_nxt = SPI_ST_SCLK_NEG;
                 end
             end
         end 
-
-        SPI_ST_STOP: begin
-            sclk = 1'b1;
-            mosi = 1'b0;
-            cs_n = 1'b1;
-            DCEN = 1'b0;
-
-            spi_busy = 1'b0;
-            spi_done = 1'b1;
-
-            if (!spi_start) begin
-                spi_state_nxt = SPI_ST_IDLE;
-    
-            end
-        end
     endcase
 end
 

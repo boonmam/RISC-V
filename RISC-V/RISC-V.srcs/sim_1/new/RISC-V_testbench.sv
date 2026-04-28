@@ -54,7 +54,7 @@ module RISC_V_testbench;
         rst = 0; // Deactivate reset
 
         // Wait for some time to observe the behavior of the LEDs
-        #200000;
+        #20000;
 
         $finish; // End the simulation
     end
